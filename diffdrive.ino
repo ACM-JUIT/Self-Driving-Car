@@ -83,95 +83,72 @@ absDiff = abs(difference);
   
 buttonState = digitalRead(buttonPin);
 
-if ((buttonState == HIGH)&&(driverState == 0))
- {
+if ((buttonState == HIGH)&&(driverState == 0)){
   delay(1500);
   driverState = 1;
  }
 
-if(Serial.available() > 0)      // Send data only when you receive data:
-   {
+if(Serial.available() > 0){      // Send data only when you receive data:
       data = Serial.read();        //Read the incoming data & store into data
       Serial.print(data);          //Print Value inside data in Serial monitor
       Serial.print("\n");     
        
-      if(data == '1') 
-      {  
+      if(data == '1'){  
        driverState = 1;
       }
-      if(data == '0')
-      {
+      if(data == '0'){
         driverState = 0;
       }
 }
   
 
-if(driverState == 0)
-{
+if(driverState == 0){
   myesc.write(80);
   myservo1.write(100);
   digitalWrite(ledpin, LOW);
 }
 
 
-if(driverState == 1)
-{
+if(driverState == 1){
 //Drive code here
 //variables: distance1, distance2, distance3 in cm
 digitalWrite(ledpin, HIGH);
 
-if (distance3 < 5 && distance3 != 0)
-{
+if (distance3 < 5 && distance3 != 0){
      myesc.write(94);
    myservo1.write(65); 
 }
-else
-{
-if((distance4 < 10 && distance4 != 0)&&(distance3 >= 20 || distance3 == 0))
-{
+else{
+if((distance4 < 10 && distance4 != 0)&&(distance3 >= 20 || distance3 == 0)){
     myesc.write(92);
    myservo1.write(130); 
 }
-else if((distance4 < 10 && distance4 != 0)&&(distance3 < 20 && distance3 != 0))
-{
+else if((distance4 < 10 && distance4 != 0)&&(distance3 < 20 && distance3 != 0)){
     myesc.write(92);
    myservo1.write(65); 
 }
+else{
+if((distance1 == 0) || (distance1 > 45)){
 
-else
-{
-if((distance1 == 0) || (distance1 > 45))
-{
-
-if((distance3 <= 45)&&(distance3 != 0))
-{
+if((distance3 <= 45)&&(distance3 != 0)){
   myesc.write(91);
    myservo1.write(95); 
-   
-   if((distance2 <= 35)&&(distance2 != 0))
-{
+   if((distance2 <= 35)&&(distance2 != 0)){
     myesc.write(92);
    myservo1.write(70); 
 }
 }
-else
-{
+else{
   myesc.write(93);
    myservo1.write(130); 
 }
-
 }
-else
-{
+else{
      myesc.write(91);
    myservo1.write(130); 
 }
-
-
 }
 }
-
-
 }
 Serial.print(distance1);
 Serial.print("\n \n distance2 \n");
@@ -179,15 +156,8 @@ Serial.print(distance2);
 Serial.print("\n \n distance3 \n");
 Serial.print(distance3);
 Serial.print("\n \n distance1 \n");
-
 }
-
-
-
-
-
-void SonarSensor(int trigPin,int echoPin)
-{
+void SonarSensor(int trigPin,int echoPin){
 digitalWrite(trigPin, LOW);
 delayMicroseconds(2);
 digitalWrite(trigPin, HIGH);
@@ -195,7 +165,4 @@ delayMicroseconds(10);
 digitalWrite(trigPin, LOW);
 duration = pulseIn(echoPin, HIGH);
 distance = (duration/2) / 29.1;
-
 }
-
-
